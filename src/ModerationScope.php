@@ -362,7 +362,7 @@ class ModerationScope implements Scope
             $model->{$model->getModeratedAtColumn()} = now();
             //if moderated_by in enabled then append it to the update
             if ($moderated_by = $model->getModeratedByColumn()) {
-                $model->{$moderated_by} = user()->getKey();
+                $model->{$moderated_by} = auth()->check() ? auth()->user()->getKey() : null;
             }
 
             $model->save();
